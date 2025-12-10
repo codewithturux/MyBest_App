@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Graduation cap icon centered -->
+    <group
+        android:translateX="30"
+        android:translateY="34">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M24,6L0,18l24,12 18,-9.82V36h4V18L24,6z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M8,26.36v8L24,42l16,-7.64v-8L24,34 8,26.36z" />
+    </group>
+</vector>
