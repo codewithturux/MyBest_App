@@ -44,6 +44,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Decode Keystore and Create Properties File
+      - name: Decode Keystore
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        env:
+          KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo $KEYSTORE_FILE | base64 -d > mybest-release.keystore
+          echo "storeFile=mybest-release.keystore" > keystore.properties
+          echo "storePassword=$KEYSTORE_PASSWORD" >> keystore.properties
+          echo "keyAlias=$KEY_ALIAS" >> keystore.properties
+          echo "keyPassword=$KEY_PASSWORD" >> keystore.properties
+
       - name: Build Debug APK
         if: ${{ github.event.inputs.build_type == 'debug' }}
         run: ./gradlew assembleDebug
@@ -65,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release-${{ github.event.inputs.version_name }}
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/build/outputs/apk/release/app-release.apk
           retention-days: 90
 
       - name: Build Summary
